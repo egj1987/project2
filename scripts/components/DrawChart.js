@@ -24,11 +24,11 @@ export class DrawChart extends Component {
     constructor(props){
         super(props)
         this.createChart = this.createChart.bind(this)
-        console.log(["this props", this.props]); 
+        
     }
 
     componentDidMount(){
-        console.log(["this props", this.props]); 
+       
         this.createChart()
     }
 
@@ -41,7 +41,7 @@ export class DrawChart extends Component {
         if(this.props.data.length != 0){
             const width = 500;
             const height = 500 * 0.6;
-            const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+            const margin = { top: 20, right: 30, bottom: 50, left: 90 };
             const node = d3.select(this.node)
                 .attr("xmlns", "http://www.w3.org/2000/svg")
                 .attr("id", "svg" + country)
@@ -50,16 +50,17 @@ export class DrawChart extends Component {
                 .style("background-color", "#282C34");;
             const country = this.props.country;
 
-            const variables = ["Invoerwaarde_1", "Uitvoerwaarde_2"];
+            const variables = ["ImportsOfServices_1", "ExportsOfServices_2"];
             const labels = ["Import", "Export"];
-            const xLabel = "Year"
-            const yLabel = "Euro(Billions)"
+            const xLabel = "Quarters"
+            const yLabel = "Euro(Millions)"
            
             const colours = ["#005EB8", "#ff7f00"]
-            const Year = this.props.data.map(d => d.Perioden.substring(0, 4));
+            const Year = this.props.data.map(d => d.Periods.substring(0,4) );
+            
             let maxValueArray = [];
             for (let i = 0; i < variables.length; i++) {
-                maxValueArray[i] = d3.max(this.props.data, (d) => d[variables[i]] * 1000);
+                maxValueArray[i] = d3.max(this.props.data, (d) => d[variables[i]]);
             };
             const maxValue = d3.max(maxValueArray, (d) => d) * 1.10;
             const fontSize = "0.9rem";
@@ -79,8 +80,7 @@ export class DrawChart extends Component {
 
             const formatValue = d3.format("~s");
 
-            const yAxis = d3.axisLeft(yScale)
-                .tickFormat(d => formatValue(d).replace('G', ''));;
+            const yAxis = d3.axisLeft(yScale);
 
             const chart = node
                 .append('g')
@@ -90,19 +90,19 @@ export class DrawChart extends Component {
 
                 const linedata = d3.line()
                     .x((d, i) => xScale(Year[i]))
-                    .y(d => yScale(d[variables[i]] * 1000));
+                    .y(d => yScale(d[variables[i]]));
 
 
                 chart.append("path")
                     .data([this.props.data])
                     .attr("class", "line " + country + " " + i)
                     .style("stroke", colours[i])
-                    .style("stroke-width", "3px")
+                    .style("stroke-width", "4px")
                     .style("fill", "none")
                     .attr("d", linedata);
 
                 chart.append("text")
-                    .attr("transform", "translate(" + width + "," + (yScale(this.props.data[this.props.data.length - 1][variables[i]] * 1000) - 5) + ")")
+                    .attr("transform", "translate(" + width + "," + (yScale(this.props.data[this.props.data.length - 1][variables[i]] ) - 5) + ")")
                     .style("font-size", fontSize)
                     .style("font-family", fontFamily)
                     .attr("text-anchor", "end")
@@ -157,7 +157,7 @@ export class DrawChart extends Component {
     return (
         
         <div>
-            <h1>"Dutch import and export in Goods- "{this.props.title}</h1>
+            <h1>Dutch import and export in Services - {this.props.title}</h1>
             <svg ref={node => this.node = node}
                 width={500} height={500}>
             </svg>

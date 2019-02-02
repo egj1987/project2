@@ -18,9 +18,8 @@ class App extends Component {
     super(props)
     this.state = {
       items:[],
-     data:[],
-     labels: []
-         
+     countries:[],
+           
      
     }
     
@@ -59,16 +58,16 @@ class App extends Component {
 
   
  addCountry(selection) {
- let urladd = `https://opendata.cbs.nl/ODataApi/odata/82616ENG/TypedDataSet?$filter=Countries eq '${selection.value}' and Services eq 'T001039' and substringof('KW',Periods)`
+ let urladd = `https://opendata.cbs.nl/ODataApi/odata/82616ENG/TypedDataSet?$filter=Countries eq '${selection.value}' and Services eq 'T001039' and substringof('JJ',Periods)`
  console.log(selection);   
  d3.json(urladd)
       .then((res) => {
         console.log(["items", res]);
         this.setState({
-          data: [...this.state.data, res.value],
-          labels: [...this.state.labels, selection]
+          countries: [...this.state.countries, {data: res.value, labels: selection}]
+         
            })
-        console.log(this.state);
+        console.log(['state',this.state]);
 
       });
 
@@ -81,8 +80,8 @@ class App extends Component {
     console.log(this.state)
     return (
       <div className="App">
-        <DropDown items={this.state.items} add={this.addCountry}/>
-        {/* <Charts data={this.state.data} /> */}
+        <DropDown items={this.state.items} add={this.addCountry} />
+        <Charts countries={this.state.countries} labels={this.state.labels} />
        
       </div>
     );

@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import DrawChart from './DrawChart.js'
 class Charts extends Component {
+  
   render() {
-    return ( this.props.data.map( (chart,id) => (
+   
+    return (this.props.countries.map( (country,id) => (
         <div>
           {(id === 0) ? "" : (<hr />)}
-          <DrawChart data={chart.countryData} country={chart.countryInitials} title={chart.countryName} /> 
+        {console.log(['hallo', country])}
+        <DrawChart key={country.labels.value} data={country.data} country={country.labels.label} title={country.labels.label} /> 
         
         </div>
   )
