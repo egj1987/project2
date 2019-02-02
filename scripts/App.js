@@ -28,19 +28,6 @@ class App extends Component {
 
   componentDidMount() {
     
-    // const url = `https://opendata.cbs.nl/ODataApi/odata/81271ned/TypedDataSet?$filter=Landen eq '${this.state.initial.countryCode}'`
-   
-    // d3.json(url)
-    //   .then((res) => {
-     
-    //   this.setState({ data: [[{
-    //     countryCode: this.state.initial.countryCode,
-    //     countryName: this.state.initial.countryName,
-    //     countryInitial: this.state.initial.countryInitials,
-    //     countryData: res.value}]]})
-      
-    //   });
-    
       const urlitems = "https://opendata.cbs.nl/ODataApi/odata/82616ENG/Countries"
 
     d3.json(urlitems)
