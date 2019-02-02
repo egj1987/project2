@@ -6,6 +6,7 @@ import { max } from "d3-array";
 import { axisBottom, axisLeft } from "d3-axis";
 import { format } from "d3-format";
 import { line } from "d3-shape";
+import { generateKeyPair } from 'crypto';
 
 const d3 = {
     select,
@@ -157,7 +158,7 @@ export class DrawChart extends Component {
     return (
         
         <div>
-            <h1>Dutch import and export in Services - {this.props.title}</h1>
+            <h1>Dutch import and export in Services - {this.props.title} <button style={removeStyle}>X</button></h1>
             <svg ref={node => this.node = node}
                 width={500} height={500}>
             </svg>
@@ -165,6 +166,15 @@ export class DrawChart extends Component {
        
     )
   }
+}
+
+const removeStyle = {
+    backgroundColor: "white",
+    fontSize: "1.5rem",
+    border: 'none',
+    padding: '5px 9px',
+    cursor: 'pointer',
+    float: 'right'
 }
 
 export default DrawChart
