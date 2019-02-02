@@ -18,16 +18,9 @@ class App extends Component {
     super(props)
     this.state = {
       items:[],
-      initial: {
-        countryCode: "720",
-        countryName: "China",
-        countryInitials: "CN",
-      },
-      data: [{countryCode: "720",
-        countryName: "China",
-        countryInitials: "CN",
-      countryData:[]}]
-      
+     data:[],
+     labels: []
+         
      
     }
     
@@ -36,18 +29,18 @@ class App extends Component {
 
   componentDidMount() {
     
-    const url = `https://opendata.cbs.nl/ODataApi/odata/81271ned/TypedDataSet?$filter=Landen eq '${this.state.initial.countryCode}'`
+    // const url = `https://opendata.cbs.nl/ODataApi/odata/81271ned/TypedDataSet?$filter=Landen eq '${this.state.initial.countryCode}'`
    
-    d3.json(url)
-      .then((res) => {
+    // d3.json(url)
+    //   .then((res) => {
      
-      this.setState({ data: [{
-        countryCode: this.state.initial.countryCode,
-        countryName: this.state.initial.countryName,
-        countryInitial: this.state.initial.countryInitials,
-        countryData: res.value}]})
+    //   this.setState({ data: [[{
+    //     countryCode: this.state.initial.countryCode,
+    //     countryName: this.state.initial.countryName,
+    //     countryInitial: this.state.initial.countryInitials,
+    //     countryData: res.value}]]})
       
-      });
+    //   });
     
       const urlitems = "https://opendata.cbs.nl/ODataApi/odata/82616ENG/Countries"
 
@@ -67,11 +60,13 @@ class App extends Component {
   
  addCountry(selection) {
  let urladd = `https://opendata.cbs.nl/ODataApi/odata/82616ENG/TypedDataSet?$filter=Countries eq '${selection.value}' and Services eq 'T001039' and substringof('KW',Periods)`
-    d3.json(urladd)
+ console.log(selection);   
+ d3.json(urladd)
       .then((res) => {
         console.log(["items", res]);
         this.setState({
-          data: [...this.state.data, res.value]
+          data: [...this.state.data, res.value],
+          labels: [...this.state.labels, selection]
            })
         console.log(this.state);
 
@@ -79,21 +74,6 @@ class App extends Component {
 
   }
   
-  //= (selection) => {
-  //   let urladd = `https://opendata.cbs.nl/ODataApi/odata/82616ENG/TypedDataSet?$filter=Countries eq '${selection.value}' and Services eq 'T001039' and substringof('KW',Periods)` 
-  //   d3.json(urladd)
-  //     .then((res) => {
-  //       console.log(["items", res]);
-  //       this.setState({
-  //         data: [...this.state.data, res.value]
-  //          })
-  //       console.log(this.state);
-
-  //     });
-  // }
-
-  // Add Todo
- 
   
 
   render() {
