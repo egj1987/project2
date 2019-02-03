@@ -19,10 +19,14 @@ class App extends Component {
     this.state = {
       items:[],
      countries:[],
+     width: 500,
+     height: 300
+    
+
            
      
     }
-    
+    this.onResize = this.onResize.bind(this);
     this.addCountry = this.addCountry.bind(this);
     this.removeCountry = this.removeCountry.bind(this);
   }
@@ -31,7 +35,7 @@ class App extends Component {
    
       const urlitems = "https://opendata.cbs.nl/ODataApi/odata/82616ENG/Countries"
 
-    d3.json(urlitems)
+      d3.json(urlitems)
       .then((res) => {
        
         this.setState({
@@ -44,7 +48,8 @@ class App extends Component {
     let selection = { value: "T001047", label: "Total countries" };
     this.addCountry(selection);
     
-    
+    window.addEventListener('resize', this.onResize, false);
+    this.onResize();
 
 
   }
@@ -73,6 +78,18 @@ class App extends Component {
       });
 
   }
+
+  onResize(){
+    let width = window.innerWidth;
+    if (width > 700) {
+      width = 700;
+    } else if (width < 300) {
+      width = 300;
+    }
+    this.setState({width: width,
+    height: width * 0.6});
+    console.log(["resize", this.state])
+  }
   
   
 
@@ -82,7 +99,7 @@ class App extends Component {
     return (
       <div className="App">
         <DropDown items={this.state.items} add={this.addCountry} />
-        <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} />
+        <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} width={this.state.width} height={this.state.height} />
        
       </div>
     );

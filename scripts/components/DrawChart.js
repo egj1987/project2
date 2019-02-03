@@ -39,15 +39,21 @@ export class DrawChart extends Component {
     createChart(){
         console.log(["this props", this.props]); 
         if(this.props.data.length != 0){
-            const width = 500;
-            const height = 500 * 0.6;
             const margin = { top: 20, right: 55, bottom: 50, left: 95 };
+            const width = this.props.width;
+            const chartWidth = this.props.width - margin.right - margin.left;        
+            const chartHeight = this.props.height - margin.top - margin.bottom;
+            const height = this.props.height;
+            
+            
             const node = d3.select(this.node)
+                .html("")
                 .attr("xmlns", "http://www.w3.org/2000/svg")
                 .attr("id", "svg" + country)
-                .attr("width", width + margin.right + margin.left)
-                .attr("height", height + margin.top + margin.bottom)
-                .style("background-color", "#282C34");;
+                .attr("width", width)// + margin.right + margin.left)
+                .attr("height", height)// + margin.top + margin.bottom)
+                .style("background-color", "#282C34");
+            
             const country = this.props.country;
 
             const variables = ["ImportsOfServices_1", "ExportsOfServices_2"];
@@ -68,11 +74,11 @@ export class DrawChart extends Component {
 
             const xScale = d3.scaleLinear()
                 .domain([Year[0], Year[Year.length - 1]])
-                .range([0, width]);
+                .range([0, chartWidth]);
 
             const yScale = d3.scaleLinear()
                 .domain([maxValue, 0])
-                .range([0, height])
+                .range([0, chartHeight])
 
             const xAxis = d3.axisBottom(xScale)
                 .tickValues(Year.filter((d, i) => !((Year.length - 1 - i) % 1)))
@@ -102,7 +108,7 @@ export class DrawChart extends Component {
                     .attr("d", linedata);
 
                 chart.append("text")
-                    .attr("transform", "translate(" + (width + 5) + "," + (yScale(this.props.data[this.props.data.length - 1][variables[i]] ) + 3) + ")")
+                    .attr("transform", "translate(" + (chartWidth + 5) + "," + (yScale(this.props.data[this.props.data.length - 1][variables[i]] ) + 3) + ")")
                     .style("font-size", fontSize)
                     .style("font-family", fontFamily)
                     .attr("text-anchor", "start")
@@ -115,17 +121,10 @@ export class DrawChart extends Component {
                 .style("color", "white")
                 .style("font-size", fontSize)
                 .style("font-family", fontFamily)
-                .attr("transform", "translate(0," + height + ")")
+                .attr("transform", "translate(0," + (chartHeight) + ")")
                 .call(xAxis);
 
-            chart.append("g")
-                .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom * 0.5) + ")")
-                .attr("class", "x-label " + country)
-                .style("text-anchor", "middle")
-                .text("xLabel");
-
-
-            chart.append('g')
+             chart.append('g')
                 .attr("class", "y-axis " + country)
                 .style("color", "white")
                 .style("font-size", fontSize)
@@ -133,8 +132,8 @@ export class DrawChart extends Component {
                 .call(yAxis);
 
             chart.append("text")
-                .attr("x", (width / 2))
-                .attr("y", (height + margin.bottom * 0.75))
+                .attr("x", (chartWidth / 2))
+                .attr("y", (chartHeight + margin.bottom * 0.75))
                 .style("fill", "white")
                 .style("font-size", fontSize)
                 .style("font-family", fontFamily)
@@ -142,7 +141,7 @@ export class DrawChart extends Component {
 
             chart.append("text")
                 .attr("y", 0 - (margin.left * 0.65))
-                .attr("x", 0 - ((height + margin.bottom + margin.top) / 2))
+                .attr("x", 0 - ((chartHeight+ margin.top + margin.bottom)/ 2))
                 .attr("transform", "rotate(-90)")
                 .style("fill", "white")
                 .style("font-size", fontSize)
@@ -156,13 +155,13 @@ export class DrawChart extends Component {
   render() {
     return (
         
-        <div >
+        <React.Fragment>
             {console.log(this.props)}
             <h1>Dutch import and export in Services - {this.props.title} <button className="remove-chart" id={this.props.title} onClick={this.props.remove.bind(this, {title:this.props.title, code: this.props.code})} style={removeStyle}>X</button></h1>
             <svg ref={node => this.node = node}
-                width={500} height={500}>
+                width={this.props.width} height={this.props.height}>
             </svg>
-        </div>
+        </React.Fragment>
        
     )
   }
