@@ -3,12 +3,13 @@ import Select from 'react-select'
 
 class DropDown extends Component {
 render() {
-    const options = this.props.items.map(d => ({
+    
+    const options = this.props.items.filter(d => !this.props.selected.includes(d.Key))
+        .map(d => ({
         value: d.Key,
         label: d.Title
-    }))
-    console.log(['Options',options]);
-    //onChange = { this.props.add }
+        }))
+
    
     return (
         <Select value="T001047"
