@@ -7,8 +7,8 @@ class Charts extends Component {
     return (this.props.countries.map( (country,id) => (
         <div id={id}>
           {(id === 0) ? "" : (<hr />)}
-        {console.log(['hallo', country])}
-        <DrawChart key={country.labels.value} code={country.labels.value} data={country.data} country={country.labels.label} title={country.labels.label} remove={this.props.remove} width={this.props.width} height={this.props.height} /> 
+       
+        <DrawChart key={id} code={country.labels.value} data={country.data} country={country.labels.label} title={country.labels.label} remove={this.props.remove} width={this.props.width} height={this.props.height} /> 
         
         </div>
   )
