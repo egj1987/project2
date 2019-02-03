@@ -24,22 +24,10 @@ class App extends Component {
     }
     
     this.addCountry = this.addCountry.bind(this);
+    this.removeCountry = this.removeCountry.bind(this);
   }
 
   componentDidMount() {
-    
-    // const url = `https://opendata.cbs.nl/ODataApi/odata/81271ned/TypedDataSet?$filter=Landen eq '${this.state.initial.countryCode}'`
-   
-    // d3.json(url)
-    //   .then((res) => {
-     
-    //   this.setState({ data: [[{
-    //     countryCode: this.state.initial.countryCode,
-    //     countryName: this.state.initial.countryName,
-    //     countryInitial: this.state.initial.countryInitials,
-    //     countryData: res.value}]]})
-      
-    //   });
     
       const urlitems = "https://opendata.cbs.nl/ODataApi/odata/82616ENG/Countries"
 
@@ -56,6 +44,14 @@ class App extends Component {
     
   }
 
+  removeCountry(remove) {
+      console.log(remove.code)
+      this.setState({
+        countries: [...this.state.countries.filter((country) => country.labels.value != remove.code)]
+
+      })
+
+  }
   
  addCountry(selection) {
  let urladd = `https://opendata.cbs.nl/ODataApi/odata/82616ENG/TypedDataSet?$filter=Countries eq '${selection.value}' and Services eq 'T001039' and substringof('JJ',Periods)`
@@ -81,7 +77,7 @@ class App extends Component {
     return (
       <div className="App">
         <DropDown items={this.state.items} add={this.addCountry} />
-        <Charts countries={this.state.countries} labels={this.state.labels} />
+        <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} />
        
       </div>
     );

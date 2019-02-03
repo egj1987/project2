@@ -8,7 +8,7 @@ class Charts extends Component {
         <div>
           {(id === 0) ? "" : (<hr />)}
         {console.log(['hallo', country])}
-        <DrawChart key={country.labels.value} data={country.data} country={country.labels.label} title={country.labels.label} /> 
+        <DrawChart key={country.labels.value} code={country.labels.value} data={country.data} country={country.labels.label} title={country.labels.label} remove={this.props.remove} /> 
         
         </div>
   )
