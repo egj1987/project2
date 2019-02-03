@@ -24,6 +24,7 @@ class App extends Component {
     }
     
     this.addCountry = this.addCountry.bind(this);
+    this.removeCountry = this.removeCountry.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +44,14 @@ class App extends Component {
     
   }
 
+  removeCountry(remove) {
+      console.log(remove.code)
+      this.setState({
+        countries: [...this.state.countries.filter((country) => country.labels.value != remove.code)]
+
+      })
+
+  }
   
  addCountry(selection) {
  let urladd = `https://opendata.cbs.nl/ODataApi/odata/82616ENG/TypedDataSet?$filter=Countries eq '${selection.value}' and Services eq 'T001039' and substringof('JJ',Periods)`
@@ -68,7 +77,7 @@ class App extends Component {
     return (
       <div className="App">
         <DropDown items={this.state.items} add={this.addCountry} />
-        <Charts countries={this.state.countries} labels={this.state.labels} />
+        <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} />
        
       </div>
     );
