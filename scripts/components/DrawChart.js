@@ -41,11 +41,10 @@ export class DrawChart extends Component {
         if(this.props.data.length != 0){
             const margin = { top: 20, right: 55, bottom: 50, left: 95 };
             const width = this.props.width;
+            const height = this.props.height;
             const chartWidth = this.props.width - margin.right - margin.left;        
             const chartHeight = this.props.height - margin.top - margin.bottom;
-            const height = this.props.height;
-            
-            
+                        
             const node = d3.select(this.node)
                 .html("")
                 .attr("xmlns", "http://www.w3.org/2000/svg")
