@@ -28,24 +28,29 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+   
       const urlitems = "https://opendata.cbs.nl/ODataApi/odata/82616ENG/Countries"
 
     d3.json(urlitems)
       .then((res) => {
-        console.log(["items", res]);
+       
         this.setState({
          items: res.value
         })
-        console.log(this.state);
+        
         
       });
 
+    let selection = { value: "T001047", label: "Total countries" };
+    this.addCountry(selection);
     
+    
+
+
   }
 
   removeCountry(remove) {
-      console.log(remove.code)
+      
       this.setState({
         countries: [...this.state.countries.filter((country) => country.labels.value != remove.code)]
 
@@ -55,15 +60,15 @@ class App extends Component {
   
  addCountry(selection) {
  let urladd = `https://opendata.cbs.nl/ODataApi/odata/82616ENG/TypedDataSet?$filter=Countries eq '${selection.value}' and Services eq 'T001039' and substringof('JJ',Periods)`
- console.log(selection);   
+  
  d3.json(urladd)
       .then((res) => {
-        console.log(["items", res]);
+        console.log(selection);       
         this.setState({
           countries: [...this.state.countries, {data: res.value, labels: selection}]
          
            })
-        console.log(['state',this.state]);
+        
 
       });
 
@@ -73,7 +78,7 @@ class App extends Component {
 
   render() {
     
-    console.log(this.state)
+    
     return (
       <div className="App">
         <DropDown items={this.state.items} add={this.addCountry} />

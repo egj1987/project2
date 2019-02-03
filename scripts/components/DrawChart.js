@@ -41,7 +41,7 @@ export class DrawChart extends Component {
         if(this.props.data.length != 0){
             const width = 500;
             const height = 500 * 0.6;
-            const margin = { top: 20, right: 30, bottom: 50, left: 90 };
+            const margin = { top: 20, right: 55, bottom: 50, left: 95 };
             const node = d3.select(this.node)
                 .attr("xmlns", "http://www.w3.org/2000/svg")
                 .attr("id", "svg" + country)
@@ -102,10 +102,10 @@ export class DrawChart extends Component {
                     .attr("d", linedata);
 
                 chart.append("text")
-                    .attr("transform", "translate(" + width + "," + (yScale(this.props.data[this.props.data.length - 1][variables[i]] ) - 5) + ")")
+                    .attr("transform", "translate(" + (width + 5) + "," + (yScale(this.props.data[this.props.data.length - 1][variables[i]] ) + 3) + ")")
                     .style("font-size", fontSize)
                     .style("font-family", fontFamily)
-                    .attr("text-anchor", "end")
+                    .attr("text-anchor", "start")
                     .style("fill", "white")
                     .text(labels[i]);
             }
@@ -156,7 +156,7 @@ export class DrawChart extends Component {
   render() {
     return (
         
-        <div>
+        <div >
             {console.log(this.props)}
             <h1>Dutch import and export in Services - {this.props.title} <button className="remove-chart" id={this.props.title} onClick={this.props.remove.bind(this, {title:this.props.title, code: this.props.code})} style={removeStyle}>X</button></h1>
             <svg ref={node => this.node = node}
