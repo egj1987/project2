@@ -17,10 +17,12 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isMounted: false,
       items:[],
      countries:[],
      width: 500,
-     height: 300
+     height: 300,
+     selected: []
     
 
            
@@ -32,7 +34,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-   
+      this.setState({ isMounted: true })
       const urlitems = "https://opendata.cbs.nl/ODataApi/odata/82616ENG/Countries"
 
       d3.json(urlitems)
@@ -57,10 +59,10 @@ class App extends Component {
   removeCountry(remove) {
       
       this.setState({
-        countries: [...this.state.countries.filter((country) => country.labels.value != remove.code)]
-
-      })
-
+        countries: [...this.state.countries.filter((country) => country.labels.value !== remove.code)],
+        selected: [...this.state.selected.filter( select => select !== remove.code  )]
+        })
+       
   }
   
  addCountry(selection) {
@@ -68,12 +70,12 @@ class App extends Component {
   
  d3.json(urladd)
       .then((res) => {
-        console.log(selection);       
+              
         this.setState({
-          countries: [...this.state.countries, {data: res.value, labels: selection}]
+          countries: [...this.state.countries, {data: res.value, labels: selection}],
+          selected: [...this.state.selected, selection.value]
          
            })
-        
 
       });
 
@@ -88,17 +90,18 @@ class App extends Component {
     }
     this.setState({width: width,
     height: width * 0.6});
-    console.log(["resize", this.state])
+    
   }
   
-  
+  componentWillUnmount() {
+    this.state.isMounted = false
+  }
 
   render() {
     
-    
     return (
       <div className="App">
-        <DropDown items={this.state.items} add={this.addCountry} />
+        <DropDown items={this.state.items} selected={this.state.selected} add={this.addCountry} />
         <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} width={this.state.width} height={this.state.height} />
        
       </div>

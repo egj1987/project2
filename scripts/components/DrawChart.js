@@ -37,7 +37,7 @@ export class DrawChart extends Component {
     }
 
     createChart(){
-        console.log(["this props", this.props]); 
+        
         if(this.props.data.length != 0){
             const margin = { top: 20, right: 55, bottom: 50, left: 95 };
             const width = this.props.width;
@@ -155,7 +155,6 @@ export class DrawChart extends Component {
     return (
         
         <React.Fragment>
-            {console.log(this.props)}
             <h1>Dutch import and export in Services - {this.props.title} <button className="remove-chart" id={this.props.title} onClick={this.props.remove.bind(this, {title:this.props.title, code: this.props.code})} style={removeStyle}>X</button></h1>
             <svg ref={node => this.node = node}
                 width={this.props.width} height={this.props.height}>
