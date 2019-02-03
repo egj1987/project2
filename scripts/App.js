@@ -19,6 +19,8 @@ class App extends Component {
     this.state = {
       items:[],
      countries:[],
+     width: 800
+
            
      
     }
@@ -82,7 +84,7 @@ class App extends Component {
     return (
       <div className="App">
         <DropDown items={this.state.items} add={this.addCountry} />
-        <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} />
+        <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} width={this.state.width} />
        
       </div>
     );

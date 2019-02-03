@@ -39,15 +39,17 @@ export class DrawChart extends Component {
     createChart(){
         console.log(["this props", this.props]); 
         if(this.props.data.length != 0){
-            const width = 500;
-            const height = 500 * 0.6;
+            const width = this.props.width;
+            const height = width * 0.6;
             const margin = { top: 20, right: 55, bottom: 50, left: 95 };
+            
             const node = d3.select(this.node)
                 .attr("xmlns", "http://www.w3.org/2000/svg")
                 .attr("id", "svg" + country)
                 .attr("width", width + margin.right + margin.left)
                 .attr("height", height + margin.top + margin.bottom)
-                .style("background-color", "#282C34");;
+                .style("background-color", "#282C34");
+            
             const country = this.props.country;
 
             const variables = ["ImportsOfServices_1", "ExportsOfServices_2"];
