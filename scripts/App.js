@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DropDown from './components/DropDown';
-import './App.css';
 import Charts from './components/Charts'; 
 
 
