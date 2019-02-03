@@ -12,7 +12,7 @@ render() {
 
    
     return (
-        <Select value="T001047"
+        <Select 
         onChange={ this.props.add }
         options={ options }
         />
