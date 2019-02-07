@@ -19,21 +19,22 @@ class App extends Component {
       isMounted: false,
       items:[],
      countries:[],
+     baseWidth: "",
      width: 500,
      height: 300,
      selected: []
-    
-
-           
-     
     }
+    this.div = React.createRef();
     this.onResize = this.onResize.bind(this);
     this.addCountry = this.addCountry.bind(this);
     this.removeCountry = this.removeCountry.bind(this);
   }
 
   componentDidMount() {
-      this.setState({ isMounted: true })
+      this.setState({ 
+         isMounted: true,
+         baseWidth: this.div.current.clientWidth 
+         });
       const urlitems = "https://opendata.cbs.nl/ODataApi/odata/82616ENG/Countries"
 
       d3.json(urlitems)
@@ -81,15 +82,20 @@ class App extends Component {
   }
 
   onResize(){
-    let width = window.innerWidth;
+    let newWidth = this.div.current.clientWidth
+    if(this.state.baseWidth !== newWidth) {
+    let width = newWidth;
     if (width > 700) {
       width = 700;
     } else if (width < 300) {
       width = 300;
     }
-    this.setState({width: width,
-    height: width * 0.6});
-    
+    this.setState({
+    baseWidth: width,
+    width: width,
+    height: width * 0.65
+    });
+    }
   }
   
   componentWillUnmount() {
@@ -99,7 +105,8 @@ class App extends Component {
   render() {
     
     return (
-      <div className="App">
+      <div className="App" ref={this.div}>
+        
         <DropDown items={this.state.items} selected={this.state.selected} add={this.addCountry} />
         <Charts countries={this.state.countries} remove={this.removeCountry} labels={this.state.labels} width={this.state.width} height={this.state.height} />
        

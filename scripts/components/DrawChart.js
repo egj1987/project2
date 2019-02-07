@@ -68,7 +68,10 @@ export class DrawChart extends Component {
                 maxValueArray[i] = d3.max(this.props.data, (d) => d[variables[i]]);
             };
             const maxValue = d3.max(maxValueArray, (d) => d) * 1.10;
-            const fontSize = "0.9rem";
+            let fontSize = "0.65rem";
+            if(width>500) {
+                fontSize = "0.9rem";
+            }
             const fontFamily = "BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,'Helvetica Neue',sans-serif"
 
             const xScale = d3.scaleLinear()
@@ -155,7 +158,7 @@ export class DrawChart extends Component {
     return (
         
         <React.Fragment>
-            <h1>Dutch import and export in Services - {this.props.title} <button className="remove-chart" id={this.props.title} onClick={this.props.remove.bind(this, {title:this.props.title, code: this.props.code})} style={removeStyle}>X</button></h1>
+            <h3>Dutch import and export in Services - {this.props.title} <button className="remove-chart" id={this.props.title} onClick={this.props.remove.bind(this, {title:this.props.title, code: this.props.code})} style={removeStyle}>X</button></h3>
             <svg ref={node => this.node = node}
                 width={this.props.width} height={this.props.height}>
             </svg>
@@ -166,7 +169,7 @@ export class DrawChart extends Component {
 }
 
 const removeStyle = {
-    backgroundColor: "white",
+    backgroundColor: "#282C34",
     fontSize: "1.5rem",
     border: 'none',
     padding: '5px 9px',

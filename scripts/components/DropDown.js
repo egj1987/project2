@@ -12,10 +12,17 @@ render() {
 
    
     return (
-        <Select 
-        onChange={ this.props.add }
-        options={ options }
-        />
+        <React.Fragment>
+            <h3>Add country or region: </h3>
+            <Select className="dropdown"
+                onChange={this.props.add}
+                options={options}
+            />
+        </React.Fragment>
+            
+
+      
+       
     );
 }
 }

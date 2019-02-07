@@ -4,7 +4,8 @@ class Charts extends Component {
   
   render() {
    
-    return (this.props.countries.map( (country,id) => (
+    return (
+      [...this.props.countries].reverse().map( (country,id) => (
         <div key={id}>
           {(id === 0) ? "" : (<hr />)}
        
